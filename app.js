@@ -657,6 +657,27 @@ function wireShopifyToolbarMessages() {
       await openVCard(current);
       return;
     }
+     if (data.type === "SHARE") {
+  if (!current) return;
+
+  const shareUrl = publicProfileUrl(current.id);
+
+  const ok = await nativeShare({
+    title: current.name,
+    text: `${current.name} — ${current.title}`,
+    url: shareUrl,
+  });
+
+  if (ok) return;
+
+  if (els.shareModalMob?.showModal) {
+    els.shareModalMob.showModal();
+  } else {
+    await copyToClipboard(shareUrl);
+    toast("Link copied.");
+  }
+  return;
+}
   });
 }
 
