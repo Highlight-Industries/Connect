@@ -264,6 +264,17 @@ function downloadTextFile(filename, text, mime) {
   a.remove();
   URL.revokeObjectURL(url);
 }
+function openVCard(emp) {
+  const text = vcardFor(emp);
+  const blob = new Blob([text], { type: "text/vcard;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+
+  // open the contact card
+  window.location.href = url;
+
+  // cleanup
+  setTimeout(() => URL.revokeObjectURL(url), 3000);
+}
 
 function vcardFor(emp) {
   const cleanPhone = safeText(emp.phone).replace(/[^\d+]/g, "");
@@ -632,6 +643,35 @@ function registerServiceWorker() {
   if (!("serviceWorker" in navigator)) return;
   navigator.serviceWorker.register("./sw.js").catch(() => {});
 }
+function wireShopifyToolbarMessages() {
+
+  window.addEventListener("message", (event) => {
+
+    const data = event.data || {};
+    if (!data.type) return;
+
+    if (data.type === "DOWNLOAD") {
+      if (!current) return;
+      openVCard(current);
+      return;
+    }
+
+    if (data.type === "FIND") {
+      els.findModal?.showModal?.();
+      setTimeout(() => els.employeeSearchMob?.focus(), 50);
+      renderFindResults("");
+      return;
+    }
+
+    if (data.type === "CONTACT") {
+      if (!current) return;
+      downloadTextFile(`${current.id}.vcf`, vcardFor(current), "text/vcard;charset=utf-8");
+      return;
+    }
+
+  });
+
+}
 
 (async function init() {
   setForceMobile(isForcedMobile());
@@ -646,5 +686,6 @@ function registerServiceWorker() {
 
   wireDesktopControls();
   wireMobileControls();
+  wireShopifyToolbarMessages();
   registerServiceWorker();
 })();
