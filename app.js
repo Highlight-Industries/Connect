@@ -212,8 +212,7 @@ function renderEmployee(emp) {
   setLink(els.emailLinkMob, emp.email ? `mailto:${emp.email}` : "#");
   setLink(els.webLinkMob, emp.website || "#");
 
-  const cleanPhone = (emp.phone || "").toString().replace(/[^
-\d+]/g, "");
+  const cleanPhone = (emp.phone || "").toString().replace(/[^\d+]/g, "");
   setLink(els.phoneLinkMob, cleanPhone ? `tel:${cleanPhone}` : "#");
 
   if (els.emailLinkMob) els.emailLinkMob.target = "_top";
