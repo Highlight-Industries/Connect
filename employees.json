@@ -1,0 +1,28 @@
+[
+  {
+    "id": "jessica-f",
+    "name": "Jessica Flanders",
+    "title": "Communications Coordinator",
+    "email": "jessicaf@highlightindustries.com",
+    "phone": "+1-616-531-2464",
+    "ext": "608",
+    "website": "https://www.highlightindustries.com",
+    "photo": "./assets/jessica-flanders.jpg",
+    "fallbackPhoto": "./assets/building.jpg",
+    "location": "Grand Rapids, MI",
+    "dept": "Marketing / Accounting"
+  },
+  {
+    "id": "taryn-s",
+    "name": "Taryn Swayze",
+    "title": "Packaging Engineer",
+    "email": "taryns@highlightindustries.com",
+    "phone": "+1-616-531-2464",
+    "ext": "242",
+    "website": "https://www.highlightindustries.com",
+    "photo": null,
+    "fallbackPhoto": "./assets/building.jpg",
+    "location": "Grand Rapids, MI",
+    "dept": 
+  }
+]

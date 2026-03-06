@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Highlight Digital Contact</title>
+
+<link rel="manifest" href="./manifest.webmanifest"/>
+<link rel="icon" href="./assets/icon-192.png"/>
+<link rel="apple-touch-icon" href="./assets/icon-192.png"/>
+
+<meta name="theme-color" content="#1F8F3A"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="./styles.css?v=11"/>
+
+</head>
+
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="desk-header" id="deskHeader">
+<div class="desk-topbar">
+
+<div class="search-wrap">
+<label class="sr-only" for="employeeSearch">Find an employee</label>
+
+<input id="employeeSearch" type="search" placeholder="Search employees…" autocomplete="off"/>
+
+<div class="search-actions">
+<button id="openBtn" class="btn btn-ghost" type="button">Open</button>
+<button id="clearBtn" class="btn btn-ghost" type="button">Clear</button>
+</div>
+
+</div>
+
+</div>
+</header>
+
+<main id="main" class="page">
+
+<section class="desk-card" id="deskCard">
+
+<div class="desk-left">
+
+<h1 id="nameDesk" class="name">—</h1>
+<div id="titleDesk" class="title">—</div>
+
+<div class="rule"></div>
+
+<div class="info">
+
+<a id="emailLinkDesk" class="info-row" href="#">
+<span class="icon">✉️</span>
+<span id="emailDesk">—</span>
+</a>
+
+<a id="phoneLinkDesk" class="info-row" href="#">
+<span class="icon">👤</span>
+<span id="phoneDesk">—</span>
+</a>
+
+<a id="webLinkDesk" class="info-row" href="#" target="_blank" rel="noopener">
+<span class="icon">🌐</span>
+<span id="webDesk">—</span>
+</a>
+
+</div>
+
+<div class="desk-cta">
+<button id="saveBtnDesk" class="btn btn-primary">Save to Contacts</button>
+<button id="sendBtnDesk" class="btn btn-primary">Send to Phone</button>
+</div>
+
+</div>
+
+<div class="desk-right">
+<div class="photo-frame">
+<img id="photoDesk" alt=""/>
+</div>
+</div>
+
+</section>
+
+
+<section id="mobShell" class="mob-shell">
+
+<div class="mob-top">
+
+<img src="./assets/mobile-logo.png" class="mob-logo" alt="Highlight Industries"/>
+
+<div class="mob-photo-wrap">
+<img id="photoMob" class="mob-photo" alt=""/>
+</div>
+
+</div>
+
+<div class="mob-body">
+
+<div class="mob-qr-wrap">
+<div class="mob-qr-card">
+<img id="qrMob" class="qr-img" alt="QR code"/>
+</div>
+</div>
+
+<div class="mob-text">
+
+<h1 id="nameMob" class="mob-name">—</h1>
+<div id="titleMob" class="mob-title">—</div>
+
+<div class="mob-rule"></div>
+
+<div class="mob-info">
+
+<a id="emailLinkMob" class="mob-row" href="#">
+<span class="mob-dot">✉️</span>
+<span id="emailMob">—</span>
+</a>
+
+<a id="phoneLinkMob" class="mob-row" href="#">
+<span class="mob-dot">👤</span>
+<span id="phoneMob">—</span>
+</a>
+
+<a id="webLinkMob" class="mob-row" href="#" target="_blank" rel="noopener">
+<span class="mob-dot">🌐</span>
+<span id="webMob">—</span>
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+
+<dialog id="sendModal" class="modal">
+
+<form method="dialog" class="modal-inner">
+
+<div class="modal-head">
+<div>
+<div class="modal-kicker">SEND TO PHONE</div>
+<div class="modal-title">Share this contact</div>
+</div>
+
+<button class="modal-x" value="cancel">✕</button>
+</div>
+
+<div class="modal-grid">
+
+<div class="qr-panel">
+<div class="qr-label">Scan to open on your phone</div>
+
+<div class="qr-box">
+<img id="qrDesk" class="qr-img" alt="QR code"/>
+</div>
+</div>
+
+<div class="share-panel">
+<button id="nativeShareBtn" class="btn btn-light">Share</button>
+<button id="copyLinkBtn" class="btn btn-light">Copy Link</button>
+<button id="textLinkBtn" class="btn btn-light">Text Link</button>
+<button id="emailLinkBtn" class="btn btn-light">Email Link</button>
+</div>
+
+</div>
+
+</form>
+
+</dialog>
+
+
+<dialog id="findModal" class="modal">
+
+<form method="dialog" class="modal-inner">
+
+<div class="modal-head">
+
+<div>
+<div class="modal-kicker">FIND</div>
+<div class="modal-title">Find an employee</div>
+</div>
+
+<button class="modal-x" value="cancel">✕</button>
+
+</div>
+
+<div class="find-body">
+
+<input id="employeeSearchMob" type="search" placeholder="Search employees…" autocomplete="off"/>
+
+<div id="findResults" class="find-results"></div>
+
+</div>
+
+</form>
+
+</dialog>
+
+<script defer src="./app.js?v=11"></script>
+
+</body>
+</html>
