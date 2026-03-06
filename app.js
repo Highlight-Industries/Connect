@@ -275,8 +275,7 @@ async function openVCard(emp) {
 }
 
 async function vcardFor(emp) {
-  const cleanPhone = safeText(emp.phone).replace(/[^
-\d+]/g, "");
+  const cleanPhone = safeText(emp.phone).replace(/[^\d+]/g, "");
   const phoneLine = cleanPhone ? `TEL;TYPE=WORK,VOICE:${cleanPhone}` : "";
   const org = "Highlight Industries, Inc.";
   const url = safeText(emp.website);
