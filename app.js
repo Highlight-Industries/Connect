@@ -166,7 +166,7 @@ function renderEmployee(emp) {
   current = emp;
 
   // Tell Shopify (parent) what phone number is active (for iPhone call button)
-  try {
+try {
   window.parent.postMessage(
     {
       type: "EMPLOYEE_META",
