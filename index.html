@@ -1,212 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-<title>Highlight Digital Contact</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<link rel="manifest" href="./manifest.webmanifest"/>
-<link rel="icon" href="./assets/icon-192.png"/>
-<link rel="apple-touch-icon" href="./assets/icon-192.png"/>
+<title>HI Connect</title>
 
-<meta name="theme-color" content="#1F8F3A"/>
-<meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<!-- PWA -->
+<link rel="manifest" href="./manifest.webmanifest">
 
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link rel="stylesheet" href="./styles.css?v=11"/>
+<!-- Icons -->
+<link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="./assets/icon-192.png">
+<link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
+
+<!-- Theme -->
+<meta name="theme-color" content="#1F8F3A">
+
+<!-- iOS App Mode -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="HI Connect">
+
+<!-- Styles -->
+<link rel="stylesheet" href="./styles.css">
 
 </head>
 
 <body>
 
-<a class="skip" href="#main">Skip to content</a>
-
+<!-- DESKTOP HEADER -->
 <header class="desk-header" id="deskHeader">
-<div class="desk-topbar">
 
-<div class="search-wrap">
-<label class="sr-only" for="employeeSearch">Find an employee</label>
+  <div class="desk-topbar">
 
-<input id="employeeSearch" type="search" placeholder="Search employees…" autocomplete="off"/>
+    <div class="search-wrap">
 
-<div class="search-actions">
-<button id="openBtn" class="btn btn-ghost" type="button">Open</button>
-<button id="clearBtn" class="btn btn-ghost" type="button">Clear</button>
-</div>
+      <input
+        id="employeeSearch"
+        type="text"
+        placeholder="Find employee..."
+        autocomplete="off"
+      >
 
-</div>
+      <button id="openBtn">Open</button>
+      <button id="clearBtn">Clear</button>
 
-</div>
+    </div>
+
+  </div>
+
 </header>
 
-<main id="main" class="page">
-
+<!-- DESKTOP CARD -->
 <section class="desk-card" id="deskCard">
 
-<div class="desk-left">
+  <div class="desk-photo">
+    <img id="photoDesk" src="./assets/building.jpg" alt="Employee Photo">
+  </div>
 
-<h1 id="nameDesk" class="name">—</h1>
-<div id="titleDesk" class="title">—</div>
+  <div class="desk-info">
 
-<div class="rule"></div>
+    <h1 id="nameDesk">Name</h1>
+    <h2 id="titleDesk">Title</h2>
 
-<div class="info">
+    <div class="desk-contact">
 
-<a id="emailLinkDesk" class="info-row" href="#">
-<span class="icon">✉️</span>
-<span id="emailDesk">—</span>
-</a>
+      <a id="emailLinkDesk">
+        <span id="emailDesk"></span>
+      </a>
 
-<a id="phoneLinkDesk" class="info-row" href="#">
-<span class="icon">👤</span>
-<span id="phoneDesk">—</span>
-</a>
+      <a id="phoneLinkDesk">
+        <span id="phoneDesk"></span>
+      </a>
 
-<a id="webLinkDesk" class="info-row" href="#" target="_blank" rel="noopener">
-<span class="icon">🌐</span>
-<span id="webDesk">—</span>
-</a>
+      <a id="webLinkDesk">
+        <span id="webDesk"></span>
+      </a>
 
-</div>
+    </div>
 
-<div class="desk-cta">
-<button id="saveBtnDesk" class="btn btn-primary">Save to Contacts</button>
-<button id="sendBtnDesk" class="btn btn-primary">Send to Phone</button>
-</div>
+  </div>
 
-</div>
+  <div class="desk-actions">
 
-<div class="desk-right">
-<div class="photo-frame">
-<img id="photoDesk" alt=""/>
-</div>
-</div>
+    <button id="saveBtnDesk">Save Contact</button>
+    <button id="sendBtnDesk">Share</button>
+
+    <img id="qrDesk" alt="QR Code">
+
+  </div>
 
 </section>
 
 
-<section id="mobShell" class="mob-shell">
+<!-- MOBILE SHELL -->
+<section id="mobShell">
 
-<div class="mob-top">
+  <div class="mob-hero">
 
-<img src="./assets/mobile-logo.png" class="mob-logo" alt="Highlight Industries"/>
+    <img id="photoMob" class="mob-portrait" src="./assets/building.jpg" alt="Employee Photo">
 
-<div class="mob-photo-wrap">
-<img id="photoMob" class="mob-photo" alt=""/>
-</div>
+  </div>
 
-</div>
+  <div class="mob-details">
 
-<div class="mob-body">
+    <h1 id="nameMob"></h1>
+    <h2 id="titleMob"></h2>
 
-<div class="mob-qr-wrap">
-<div class="mob-qr-card">
-<img id="qrMob" class="qr-img" alt="QR code"/>
-</div>
-</div>
+    <div class="mob-contact">
 
-<div class="mob-text">
+      <a id="emailLinkMob">
+        <span id="emailMob"></span>
+      </a>
 
-<h1 id="nameMob" class="mob-name">—</h1>
-<div id="titleMob" class="mob-title">—</div>
+      <a id="phoneLinkMob">
+        <span id="phoneMob"></span>
+      </a>
 
-<div class="mob-rule"></div>
+      <a id="webLinkMob">
+        <span id="webMob"></span>
+      </a>
 
-<div class="mob-info">
+    </div>
 
-<a id="emailLinkMob" class="mob-row" href="#">
-<span class="mob-dot">✉️</span>
-<span id="emailMob">—</span>
-</a>
+    <img id="qrMob" alt="QR Code">
 
-<a id="phoneLinkMob" class="mob-row" href="#">
-<span class="mob-dot">👤</span>
-<span id="phoneMob">—</span>
-</a>
-
-<a id="webLinkMob" class="mob-row" href="#" target="_blank" rel="noopener">
-<span class="mob-dot">🌐</span>
-<span id="webMob">—</span>
-</a>
-
-</div>
-
-</div>
-
-</div>
+  </div>
 
 </section>
 
-</main>
 
+<!-- SHARE MODAL -->
+<dialog id="shareModalMob">
 
-<dialog id="sendModal" class="modal">
+  <h3>Share Contact</h3>
 
-<form method="dialog" class="modal-inner">
+  <button id="copyLinkBtnMob">Copy Link</button>
+  <button id="textLinkBtnMob">Text</button>
+  <button id="emailLinkBtnMob">Email</button>
 
-<div class="modal-head">
-<div>
-<div class="modal-kicker">SEND TO PHONE</div>
-<div class="modal-title">Share this contact</div>
-</div>
-
-<button class="modal-x" value="cancel">✕</button>
-</div>
-
-<div class="modal-grid">
-
-<div class="qr-panel">
-<div class="qr-label">Scan to open on your phone</div>
-
-<div class="qr-box">
-<img id="qrDesk" class="qr-img" alt="QR code"/>
-</div>
-</div>
-
-<div class="share-panel">
-<button id="nativeShareBtn" class="btn btn-light">Share</button>
-<button id="copyLinkBtn" class="btn btn-light">Copy Link</button>
-<button id="textLinkBtn" class="btn btn-light">Text Link</button>
-<button id="emailLinkBtn" class="btn btn-light">Email Link</button>
-</div>
-
-</div>
-
-</form>
+  <button onclick="this.closest('dialog').close()">Close</button>
 
 </dialog>
 
 
-<dialog id="findModal" class="modal">
+<!-- FIND MODAL -->
+<dialog id="findModal">
 
-<form method="dialog" class="modal-inner">
+  <input
+    id="employeeSearchMob"
+    type="text"
+    placeholder="Search employees..."
+    autocomplete="off"
+  >
 
-<div class="modal-head">
+  <div id="findResults"></div>
 
-<div>
-<div class="modal-kicker">FIND</div>
-<div class="modal-title">Find an employee</div>
-</div>
-
-<button class="modal-x" value="cancel">✕</button>
-
-</div>
-
-<div class="find-body">
-
-<input id="employeeSearchMob" type="search" placeholder="Search employees…" autocomplete="off"/>
-
-<div id="findResults" class="find-results"></div>
-
-</div>
-
-</form>
+  <button onclick="this.closest('dialog').close()">Close</button>
 
 </dialog>
 
-<script defer src="./app.js?v=11"></script>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+
+<!-- App Script -->
+<script src="./app.js"></script>
+
+
+<!-- Service Worker -->
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("./sw.js")
+}
+</script>
 
 </body>
 </html>
