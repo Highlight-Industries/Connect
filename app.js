@@ -230,10 +230,10 @@ if (els.webLinkMob) els.webLinkMob.target = "_top";
   if (els.employeeSearchMob) els.employeeSearchMob.value = "";
   if (els.findResults) els.findResults.innerHTML = "";
 
-  // Update URL (keep view param)
-  const url = new URL(location.href);
-  url.searchParams.set("u", emp.id);
-  history.replaceState({}, "", url.toString());
+// Update URL using clean hash instead of ?u=
+const url = new URL(location.href);
+url.hash = encodeURIComponent(emp.id);
+history.replaceState({}, "", url.toString());
 }
 
 function findEmployeeByNameOrId(q) {
