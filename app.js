@@ -167,11 +167,17 @@ function renderEmployee(emp) {
 
   // Tell Shopify (parent) what phone number is active (for iPhone call button)
   try {
-    window.parent.postMessage(
-      { type: "EMPLOYEE_PHONE", phone: emp.phone || "" },
-      "*"
-    );
-  } catch (e) {}
+  window.parent.postMessage(
+    {
+      type: "EMPLOYEE_META",
+      phone: emp.phone || "",
+      name: emp.name || "",
+      title: emp.title || "",
+      shareUrl: publicProfileUrl(emp.id)
+    },
+    "*"
+  );
+} catch (e) {}
 
   // Desktop text
   if (els.nameDesk) els.nameDesk.textContent = emp.name || "—";
