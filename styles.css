@@ -647,11 +647,4 @@ body.force-mobile .mob-shell{
 .topbar-actions {
   display: none !important;
 }
-/* Tighten desktop layout after hiding search */
-.desk-header {
-  display: none !important;
-}
 
-.desk-card {
-  margin-top: 0 !important;
-}
