@@ -681,3 +681,7 @@ body.force-mobile .mob-shell{
 .tiny-note{
   margin-top: 12px !important;
 }
+.desk-cta{
+  margin-top: auto !important;
+  padding-top: 40px !important;
+}
