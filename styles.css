@@ -647,4 +647,27 @@ body.force-mobile .mob-shell{
 .topbar-actions {
   display: none !important;
 }
+/* Better handling for long desktop names */
+.desk-info{
+  top: 155px !important;
+  right: 35px;
+  bottom: 135px;          /* reserve space above the mockup buttons */
+  display: flex;
+  flex-direction: column;
+}
+
+.desk-name{
+  font-size: clamp(34px, 3.4vw, 44px) !important;
+  line-height: .95;
+  max-width: 9ch;         /* encourages cleaner wrapping */
+  text-wrap: balance;
+}
+
+.desk-title{
+  min-height: 24px;       /* keeps spacing steadier whether title exists or not */
+}
+
+.desk-meta{
+  margin-top: 14px;
+}
 
