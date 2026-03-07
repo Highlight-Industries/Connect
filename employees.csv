@@ -1,5 +1,5 @@
 id,name,title,email,phone,ext,website,photo,fallbackPhoto,location,dept
-jessica-f,Jessica Flanders,Communications Coordinator,jessicaf@highlightindustries.com,+1-616-531-2464,608,https://www.highlightindustries.com,./assets/jessica-flanders.jpg,./assets/building.jpg,"Wyoming, MI", MI",E‑Commerce / Operations
+jessica-f,Jessica Flanders,Communications Coordinator,jessicaf@highlightindustries.com,+1-616-531-2464,608,https://www.highlightindustries.com,./assets/jessica-flanders.jpg,./assets/building.jpg,"Wyoming, MI",E‑Commerce / Operations
 taryn-s,Taryn Swayze,Packaging Engineer,taryns@highlightindustries.com,+1-616-531-2464,242,https://www.highlightindustries.com,,./assets/building.jpg,"Wyoming, MI",Engineering
 kayden-l,Kayden Lewis, Human Resources, kaydenl@highlightindustries.com, 616-531-2464,614, https://www.highlightindustries.com,,./assets/building.jpg,"Wyoming, MI", Engineering
 kurt-r,Kurt Riemenschneider,,kurtr@highlightindustries.com, 616-531-2464,204,https://www.highlightindustries.com,,./assets/building.jpg,"Wyoming, MI"
