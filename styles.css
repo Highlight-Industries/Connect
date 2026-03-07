@@ -641,3 +641,17 @@ body.force-mobile .mob-shell{
 .mob-main button{
   display:none !important;
 }
+/* Hide search/find for v1 */
+.search-wrap,
+.search-actions,
+.topbar-actions {
+  display: none !important;
+}
+/* Tighten desktop layout after hiding search */
+.desk-header {
+  display: none !important;
+}
+
+.desk-card {
+  margin-top: 0 !important;
+}
