@@ -9,7 +9,7 @@
     "website": "https://www.highlightindustries.com",
     "photo": "./assets/jessica-flanders.jpg",
     "fallbackPhoto": "./assets/building.jpg",
-    "location": "Grand Rapids, MI",
+    "location": "Wyoming, MI",
     "dept": "Marketing / Accounting"
   },
   {
@@ -22,7 +22,18 @@
     "website": "https://www.highlightindustries.com",
     "photo": null,
     "fallbackPhoto": "./assets/building.jpg",
-    "location": "Grand Rapids, MI",
+    "location": "Wyoming, MI",
     "dept": 
   }
+  "id": "kurt-r",
+    "name": "Kurt Riemenschneider",
+    "title": "",
+    "email": "kurtr@highlightindustries.com",
+    "phone": "+1-616-531-2464",
+    "ext": "204",
+    "website": "https://www.highlightindustries.com",
+    "photo": null,
+    "fallbackPhoto": "./assets/building.jpg",
+    "location": "Wyoming, MI",
+    "dept": 
 ]
