@@ -1,4 +1,4 @@
-const SHOPIFY_URL = "https://www.highlightindustries.net/pages/connect-v2";
+const SHOPIFY_URL = "https://www.highlightindustries.net/pages/connect";
 const CSV_URL = "./employees.csv";
 const DEFAULT_PHOTO = "./assets/building.png";
 const VCARD_PHOTO_URL = "./assets/building.png";
