@@ -1,7 +1,7 @@
 {
   "name": "HI Connect",
   "short_name": "HI Connect",
-  "start_url": "/Connect-v2/?id=jessica",
+  "start_url": "/Connect/?id=jessica",
   "display": "standalone",
   "background_color": "#0f0f10",
   "theme_color": "#1f8f3a",
