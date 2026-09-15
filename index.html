@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
   <title>HI | Connect</title>
 
   <meta name="theme-color" content="#1F8F3A" />
@@ -10,151 +11,446 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="HI Connect" />
 
-<link rel="manifest" href="./site.webmanifest?v=31" />
-<link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32.png?v=31" />
-<link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png?v=31" />
-<link rel="apple-touch-icon-precomposed" sizes="180x180" href="./assets/apple-touch-icon.png?v=31" />
+  <link rel="manifest" href="./site.webmanifest?v=32" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link
+    rel="icon"
+    type="image/svg+xml"
+    href="./assets/connect-icon.svg?v=32"
+  />
 
-  <link rel="stylesheet" href="./styles.css" />
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="32x32"
+    href="./assets/connect-icon-32.png?v=32"
+  />
+
+  <link
+    rel="apple-touch-icon"
+    sizes="180x180"
+    href="./assets/connect-icon-180.png?v=32"
+  />
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  />
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  />
+
+  <link
+    rel="stylesheet"
+    href="./styles.css"
+  />
 </head>
+
 <body>
   <div class="app">
 
-    <section class="view view--desktop" aria-label="Desktop contact card">
+    <!-- DESKTOP -->
+    <section
+      class="view view--desktop"
+      aria-label="Desktop contact card">
+
       <div class="desk-shell">
         <div class="desk-mock">
+
           <header class="desk-header">
             <div class="desk-search">
-              <label class="sr-only" for="employeeSearch">Search employees</label>
-              <input id="employeeSearch" type="search" placeholder="Search employee…" autocomplete="off" />
-              <button id="openBtn" class="btn btn--solid" type="button">Open</button>
-              <button id="clearBtn" class="btn btn--ghost" type="button">Clear</button>
+
+              <label
+                class="sr-only"
+                for="employeeSearch">
+                Search employees
+              </label>
+
+              <input
+                id="employeeSearch"
+                type="search"
+                placeholder="Search employee…"
+                autocomplete="off"
+              />
+
+              <button
+                id="openBtn"
+                class="btn btn--solid"
+                type="button">
+                Open
+              </button>
+
+              <button
+                id="clearBtn"
+                class="btn btn--ghost"
+                type="button">
+                Clear
+              </button>
+
             </div>
           </header>
 
           <main class="desk-overlay">
-            <button id="deskSaveHit" class="desk-hit desk-hit--save" type="button" aria-label="Save to Contacts"></button>
-            <button id="deskShareHit" class="desk-hit desk-hit--share" type="button" aria-label="Share Contact"></button>
 
-            <div class="desk-photo" aria-label="Employee photo">
-              <img id="deskPhoto" alt="Employee headshot" />
+            <button
+              id="deskSaveHit"
+              class="desk-hit desk-hit--save"
+              type="button"
+              aria-label="Save to Contacts">
+            </button>
+
+            <button
+              id="deskShareHit"
+              class="desk-hit desk-hit--share"
+              type="button"
+              aria-label="Share Contact">
+            </button>
+
+            <div
+              class="desk-photo"
+              aria-label="Employee photo">
+              <img
+                id="deskPhoto"
+                alt="Employee headshot"
+              />
             </div>
 
             <div class="desk-info">
-              <div class="desk-name" id="deskName">Loading…</div>
-              <div class="desk-title" id="deskTitle"></div>
-              <div class="desk-booth" id="deskBooth" hidden></div>
 
-<div class="desk-meta">
+              <div
+                class="desk-name"
+                id="deskName">
+                Loading…
+              </div>
+
+              <div
+                class="desk-title"
+                id="deskTitle">
+              </div>
+
+              <div
+                class="desk-booth"
+                id="deskBooth"
+                hidden>
+              </div>
 
               <div class="desk-meta">
+
                 <div class="meta-row">
-                  <span class="meta-label">Phone</span>
-                  <a id="deskPhone" href="#" class="meta-value"></a>
+                  <span class="meta-label">
+                    Phone
+                  </span>
+
+                  <a
+                    id="deskPhone"
+                    href="#"
+                    class="meta-value">
+                  </a>
                 </div>
+
                 <div class="meta-row">
-                  <span class="meta-label">Email</span>
-                  <a id="deskEmail" href="#" class="meta-value"></a>
+                  <span class="meta-label">
+                    Email
+                  </span>
+
+                  <a
+                    id="deskEmail"
+                    href="#"
+                    class="meta-value">
+                  </a>
                 </div>
+
                 <div class="meta-row">
-                  <span class="meta-label">Web</span>
-                  <a id="deskWeb" href="https://www.highlightindustries.com" target="_blank" rel="noopener" class="meta-value">highlightindustries.com</a>
+                  <span class="meta-label">
+                    Web
+                  </span>
+
+                  <a
+                    id="deskWeb"
+                    href="https://www.highlightindustries.com"
+                    target="_blank"
+                    rel="noopener"
+                    class="meta-value">
+                    highlightindustries.com
+                  </a>
                 </div>
+
               </div>
             </div>
+
           </main>
         </div>
       </div>
     </section>
 
-    <section class="view view--mobile" aria-label="Mobile contact card">
+
+    <!-- MOBILE -->
+    <section
+      class="view view--mobile"
+      aria-label="Mobile contact card">
+
       <div class="mob-shell">
         <div class="mob-mock">
-          <div class="mob-portrait" aria-label="Employee photo">
-            <img id="mobPhoto" alt="Employee photo" />
+
+          <div
+            class="mob-portrait"
+            aria-label="Employee photo">
+
+            <img
+              id="mobPhoto"
+              alt="Employee photo"
+            />
           </div>
 
-          <div class="mob-qrCircle" aria-label="QR code">
-            <img id="mobQr" alt="QR code" />
-          </div>
+          <div
+            class="mob-qrCircle"
+            aria-label="QR code">
 
+            <img
+              id="mobQr"
+              alt="QR code"
+            />
+          </div>
 
           <header class="mob-top"></header>
 
           <main class="mob-main">
             <div class="mob-hero">
-              <div class="mob-details" aria-label="Employee details">
+
+              <div
+                class="mob-details"
+                aria-label="Employee details">
+
                 <div class="mob-titleblock">
-                  <div class="mob-name" id="mobName">Loading…</div>
-                  <div class="mob-role" id="mobTitle"></div>
-                  <div class="mob-booth" id="mobBooth" hidden></div>
+
+                  <div
+                    class="mob-name"
+                    id="mobName">
+                    Loading…
+                  </div>
+
+                  <div
+                    class="mob-role"
+                    id="mobTitle">
+                  </div>
+
+                  <div
+                    class="mob-booth"
+                    id="mobBooth"
+                    hidden>
+                  </div>
+
                 </div>
 
                 <div class="mob-row">
-                  <div class="mob-k">Phone</div>
-                  <div class="mob-v"><a id="mobPhone" href="#"></a></div>
+                  <div class="mob-k">
+                    Phone
+                  </div>
+
+                  <div class="mob-v">
+                    <a
+                      id="mobPhone"
+                      href="#">
+                    </a>
+                  </div>
                 </div>
+
                 <div class="mob-row">
-                  <div class="mob-k">Email</div>
-                  <div class="mob-v"><a id="mobEmail2" href="#"></a></div>
+                  <div class="mob-k">
+                    Email
+                  </div>
+
+                  <div class="mob-v">
+                    <a
+                      id="mobEmail2"
+                      href="#">
+                    </a>
+                  </div>
                 </div>
+
                 <div class="mob-row">
-                  <div class="mob-k">Office</div>
-                  <div class="mob-v">Grand Rapids, MI</div>
+                  <div class="mob-k">
+                    Office
+                  </div>
+
+                  <div class="mob-v">
+                    Grand Rapids, MI
+                  </div>
                 </div>
+
               </div>
             </div>
           </main>
 
-          <nav class="mob-bottombar" aria-label="Bottom actions">
-            <button id="mobAddBtn" class="pill pill--solid" type="button" aria-label="Add contact">
-  <span class="pill-ic pill-ic--add" aria-hidden="true">
-    <svg viewBox="0 0 64 64" focusable="false">
-      <circle cx="24" cy="24" r="14" fill="none" stroke="currentColor" stroke-width="4"/>
-      <path d="M10 50c2.5-8 9-12 14-12s11.5 4 14 12" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
-      <circle cx="45" cy="43" r="11" fill="currentColor"/>
-      <path d="M45 38v10M40 43h10" fill="none" stroke="#1f8f3a" stroke-width="4" stroke-linecap="round"/>
-    </svg>
-  </span>
-  <span class="pill-tx">Add Contact</span>
-</button>
-          <button id="mobShareBtn" class="pill" type="button" aria-label="Share">
-  <span class="pill-ic pill-ic--share" aria-hidden="true">
-    <svg viewBox="0 0 24 24">
-      <path d="M3 11.5L21 3 13.5 21 11 13 3 11.5Z"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2.4"
-        stroke-linejoin="round"
-        stroke-linecap="round"/>
-    </svg>
-  </span>
-  <span class="pill-tx">Share</span>
-</button>
-            <button id="mobDirectoryBtn" class="pill" type="button" aria-label="Find employees">
-              <span class="pill-ic">⌕</span><span class="pill-tx">Find</span>
+          <nav
+            class="mob-bottombar"
+            aria-label="Bottom actions">
+
+            <button
+              id="mobAddBtn"
+              class="pill pill--solid"
+              type="button"
+              aria-label="Add contact">
+
+              <span
+                class="pill-ic pill-ic--add"
+                aria-hidden="true">
+
+                <svg
+                  viewBox="0 0 64 64"
+                  focusable="false">
+
+                  <circle
+                    cx="24"
+                    cy="24"
+                    r="14"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="4"
+                  />
+
+                  <path
+                    d="M10 50c2.5-8 9-12 14-12s11.5 4 14 12"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="4"
+                    stroke-linecap="round"
+                  />
+
+                  <circle
+                    cx="45"
+                    cy="43"
+                    r="11"
+                    fill="currentColor"
+                  />
+
+                  <path
+                    d="M45 38v10M40 43h10"
+                    fill="none"
+                    stroke="#1f8f3a"
+                    stroke-width="4"
+                    stroke-linecap="round"
+                  />
+
+                </svg>
+              </span>
+
+              <span class="pill-tx">
+                Add Contact
+              </span>
+
             </button>
+
+            <button
+              id="mobShareBtn"
+              class="pill"
+              type="button"
+              aria-label="Share">
+
+              <span
+                class="pill-ic pill-ic--share"
+                aria-hidden="true">
+
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M3 11.5L21 3 13.5 21 11 13 3 11.5Z"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.4"
+                    stroke-linejoin="round"
+                    stroke-linecap="round"
+                  />
+                </svg>
+
+              </span>
+
+              <span class="pill-tx">
+                Share
+              </span>
+
+            </button>
+
+            <button
+              id="mobDirectoryBtn"
+              class="pill"
+              type="button"
+              aria-label="Find employees">
+
+              <span class="pill-ic">
+                ⌕
+              </span>
+
+              <span class="pill-tx">
+                Find
+              </span>
+
+            </button>
+
           </nav>
+
         </div>
       </div>
     </section>
+
   </div>
 
-  <div class="modal" id="modal" aria-hidden="true">
-    <div class="modal__backdrop" data-close="1"></div>
-    <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+
+  <!-- MODAL -->
+  <div
+    class="modal"
+    id="modal"
+    aria-hidden="true">
+
+    <div
+      class="modal__backdrop"
+      data-close="1">
+    </div>
+
+    <div
+      class="modal__panel"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modalTitle">
+
       <div class="modal__head">
-        <div class="modal__title" id="modalTitle">Share</div>
-        <button class="modal__x" type="button" data-close="1" aria-label="Close">✕</button>
+
+        <div
+          class="modal__title"
+          id="modalTitle">
+          Share
+        </div>
+
+        <button
+          class="modal__x"
+          type="button"
+          data-close="1"
+          aria-label="Close">
+          ✕
+        </button>
+
       </div>
-      <div class="modal__body" id="modalBody"></div>
+
+      <div
+        class="modal__body"
+        id="modalBody">
+      </div>
+
     </div>
   </div>
 
-  <script src="./app.js" defer></script>
+
+  <script
+    src="./app.js"
+    defer>
+  </script>
+
 </body>
 </html>
