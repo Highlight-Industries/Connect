@@ -41,19 +41,13 @@ a {
 
 .sr-only {
   position: absolute;
-
   width: 1px;
   height: 1px;
-
   padding: 0;
   margin: -1px;
-
   overflow: hidden;
-
   clip: rect(0, 0, 0, 0);
-
   white-space: nowrap;
-
   border: 0;
 }
 
@@ -85,17 +79,11 @@ a {
 
 .btn {
   border: 1px solid rgba(255, 255, 255, 0.16);
-
   background: rgba(255, 255, 255, 0.08);
-
   color: #fff;
-
   padding: 10px 14px;
-
   border-radius: 14px;
-
   font-weight: 700;
-
   cursor: pointer;
 }
 
@@ -114,26 +102,18 @@ a {
 
 .desk-shell {
   min-height: 100vh;
-
   display: flex;
-
   align-items: center;
   justify-content: center;
-
   padding: 28px;
 }
 
 .desk-mock {
   width: min(1200px, 94vw);
-
   aspect-ratio: 16 / 9;
-
   position: relative;
-
   border-radius: 26px;
-
   overflow: hidden;
-
   box-shadow: var(--shadow);
 
   background:
@@ -147,51 +127,33 @@ a {
 
 .desk-header {
   position: absolute;
-
   top: 22px;
   left: 22px;
   right: 22px;
-
   display: flex;
-
   justify-content: flex-start;
-
   z-index: 5;
 }
 
 .desk-search {
   display: flex;
-
   align-items: center;
-
   gap: 10px;
-
   padding: 10px 10px 10px 12px;
-
   border-radius: 18px;
-
   background: rgba(0, 0, 0, 0.28);
-
   border: 1px solid rgba(255, 255, 255, 0.14);
-
   backdrop-filter: blur(8px);
-
   -webkit-backdrop-filter: blur(8px);
 }
 
 .desk-search input {
   width: 320px;
-
   max-width: 40vw;
-
   border: 0;
-
   outline: 0;
-
   background: transparent;
-
   color: #fff;
-
   font-size: 16px;
 }
 
@@ -200,9 +162,7 @@ a {
 
 .desk-overlay {
   position: absolute;
-
   inset: 0;
-
   z-index: 2;
 }
 
@@ -211,118 +171,82 @@ a {
 
 .desk-photo {
   position: absolute;
-
   left: 23.86%;
   top: 51.21%;
-
   transform: translate(-50%, -50%);
-
   width: min(520px, 42vw);
   height: min(520px, 42vw);
-
   border-radius: 50%;
-
   background: #fff;
-
   overflow: hidden;
-
   display: grid;
-
   place-items: center;
-
   box-shadow: 0 16px 50px rgba(0, 0, 0, 0.45);
 }
 
 .desk-photo img {
   width: 92%;
   height: 92%;
-
   border-radius: 50%;
-
   object-fit: cover;
-
   object-position: 90% center;
-
   display: block;
 }
 
 
-/* DESKTOP EMPLOYEE INFO */
+/* DESKTOP EMPLOYEE INFO
+   Matches the stronger mobile black/green treatment */
 
 .desk-info {
   position: absolute;
-
   left: 53%;
   top: 14%;
   right: 3%;
 
-  color: #0b0b0b;
+  color: #fff;
 
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0.88),
-      rgba(255, 255, 255, 0.72)
-    );
+  background: rgba(0, 0, 0, 0.58);
 
-  border: 1px solid rgba(255, 255, 255, 0.16);
-
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 22px;
 
   padding: 26px 34px 24px;
 
-  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.45);
 
   backdrop-filter: blur(10px);
-
   -webkit-backdrop-filter: blur(10px);
 }
 
 .desk-name {
   margin: 0;
-
   font-size: 46px;
-
   font-weight: 800;
-
   line-height: 1;
-
   color: var(--green);
-
   letter-spacing: -0.5px;
-
-  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.40);
+  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.75);
 }
 
 .desk-title {
   margin-top: 10px;
-
   font-size: 22px;
-
+  line-height: 1.2;
   font-weight: 700;
-
-  color: #f2f2f2;
-
-  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.40);
+  color: #fff;
+  opacity: 1;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.70);
 }
 
 .desk-booth {
   margin-top: 12px;
-
   display: inline-block;
-
-  padding: 4px 12px;
-
+  padding: 5px 12px;
   border-radius: 999px;
-
   background: var(--green);
-
   color: #fff;
-
   font-size: 16px;
-
   font-weight: 800;
-
   opacity: 1;
 }
 
@@ -331,25 +255,17 @@ a {
 
 .desk-meta {
   margin-top: 18px;
-
   display: grid;
-
   gap: 0;
 }
 
 .meta-row {
   display: flex;
-
   justify-content: space-between;
-
   align-items: center;
-
   gap: 18px;
-
   padding: 14px 0;
-
   border-bottom: 1px solid rgba(255, 255, 255, 0.14);
-
   background: none;
 }
 
@@ -358,27 +274,21 @@ a {
 }
 
 .meta-label {
-  color: #000;
-
+  color: #fff;
   font-weight: 700;
-
   font-size: 18px;
-
   opacity: 1;
 }
 
 .meta-value {
-  color: #444;
-
+  color: #d8d8d8;
   font-weight: 500;
-
   text-decoration: none;
-
   font-size: 18px;
 }
 
 .meta-value:hover {
-  color: #1f1f1f;
+  color: #fff;
 }
 
 
@@ -386,33 +296,25 @@ a {
 
 .desk-hit {
   position: absolute;
-
   border: 0;
-
   background: transparent;
-
   cursor: pointer;
-
   z-index: 6;
 }
 
 .desk-hit--save {
   left: 49%;
   top: 79.5%;
-
   width: 20%;
   height: 10%;
-
   border-radius: 999px;
 }
 
 .desk-hit--share {
   left: 73%;
   top: 79.5%;
-
   width: 20%;
   height: 10%;
-
   border-radius: 999px;
 }
 
@@ -423,28 +325,19 @@ a {
 
 .mob-shell {
   min-height: 100svh;
-
   display: flex;
-
   align-items: center;
   justify-content: center;
-
   padding: 0 12px;
-
   touch-action: pan-y;
 }
 
 .mob-mock {
   width: min(420px, 96vw);
-
   min-height: 820px;
-
   position: relative;
-
   border-radius: 30px;
-
   overflow: visible;
-
   box-shadow: var(--shadow);
 
   background:
@@ -452,23 +345,14 @@ a {
     center top / cover
     no-repeat;
 
-
-  /* QR POSITION */
-
   --qr-cx: 23.2%;
   --qr-cy: 43.9%;
   --qr-size: min(132px, 34vw);
-
-
-  /* MOBILE ICON POSITIONS */
 
   --icon-y: 45.4%;
   --call-x: 47%;
   --email-x: 67%;
   --web-x: 90%;
-
-
-  /* DETAILS CARD SPACING */
 
   --details-top: 54%;
   --details-bottom-gap: 118px;
@@ -479,23 +363,16 @@ a {
 
 .mob-main {
   position: absolute;
-
   inset: 0;
-
   display: block;
-
   padding: 0;
-
   touch-action: pan-y;
 }
 
 .mob-hero {
   position: relative;
-
   height: 100%;
-
   background: none;
-
   overflow: visible;
 }
 
@@ -504,34 +381,23 @@ a {
 
 .mob-portrait {
   position: absolute;
-
   top: 80px;
   left: 50%;
-
   transform: translateX(-50%);
-
   width: 175px;
   height: 175px;
-
   border-radius: 20px;
-
   overflow: hidden;
-
   background: rgba(255, 255, 255, 0.10);
-
   box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
-
   z-index: 80;
 }
 
 .mob-portrait img {
   width: 100%;
   height: 100%;
-
   display: block;
-
   object-fit: cover;
-
   object-position: 55% 35%;
 }
 
@@ -540,7 +406,6 @@ a {
 
 .mob-qrCircle {
   position: absolute;
-
   width: var(--qr-size);
   height: var(--qr-size);
 
@@ -557,17 +422,11 @@ a {
     );
 
   border-radius: 999px;
-
   background: #fff;
-
   display: grid;
-
   place-items: center;
-
   overflow: hidden;
-
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-
   z-index: 60;
 }
 
@@ -575,9 +434,7 @@ a {
 #mobQr {
   width: 84%;
   height: 84%;
-
   object-fit: contain;
-
   display: block;
 }
 
@@ -586,14 +443,10 @@ a {
 
 .mob-details {
   position: absolute;
-
   left: 18px;
   right: 18px;
-
   top: var(--details-top);
-
   margin: 0;
-
   z-index: 90;
 
   max-height:
@@ -604,99 +457,62 @@ a {
     );
 
   overflow-y: auto;
-
   -webkit-overflow-scrolling: touch;
 
   background: rgba(0, 0, 0, 0.20);
 
   border: 1px solid rgba(255, 255, 255, 0.14);
-
   border-radius: 20px;
 
   padding: 12px 14px;
 
   backdrop-filter: blur(10px);
-
   -webkit-backdrop-filter: blur(10px);
 }
 
 
-/* =========================================
-   MOBILE NAME / TITLE / BOOTH
-   READABILITY IMPROVEMENT
-========================================= */
+/* MOBILE NAME / TITLE / BOOTH */
 
 .mob-titleblock {
   background: rgba(0, 0, 0, 0.42);
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.10);
-
+  border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: 14px;
-
   padding: 10px 12px 11px;
-
   margin: -2px -2px 8px;
 
   backdrop-filter: blur(6px);
-
   -webkit-backdrop-filter: blur(6px);
 }
 
 .mob-name {
   font-size: 34px;
-
   font-weight: 900;
-
   line-height: 1.02;
-
   color: var(--green);
-
-  text-shadow:
-    0 3px 12px
-    rgba(0, 0, 0, 0.75);
+  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.75);
 }
 
 .mob-role {
   margin-top: 7px;
-
   font-size: 18px;
-
   line-height: 1.2;
-
   font-weight: 700;
-
   color: #fff;
-
   opacity: 1;
-
-  text-shadow:
-    0 2px 8px
-    rgba(0, 0, 0, 0.75);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.75);
 }
 
 .mob-booth {
   margin-top: 9px;
-
   margin-bottom: 2px;
-
   display: inline-block;
-
   padding: 5px 11px;
-
   border-radius: 999px;
-
   background: var(--green);
-
   color: #fff;
-
   font-size: 14px;
-
   font-weight: 900;
-
   line-height: 1.15;
-
   opacity: 1;
 }
 
@@ -705,16 +521,10 @@ a {
 
 .mob-row {
   display: flex;
-
   justify-content: space-between;
-
   gap: 10px;
-
   padding: 10px 2px;
-
-  border-bottom:
-    1px solid
-    rgba(255, 255, 255, 0.10);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
 }
 
 .mob-row:last-child {
@@ -723,21 +533,17 @@ a {
 
 .mob-k {
   color: #000;
-
   font-weight: 700;
 }
 
 .mob-v {
   color: #444;
-
   font-weight: 500;
 }
 
 .mob-v a {
   color: #444;
-
   text-decoration: none;
-
   font-weight: 500;
 }
 
@@ -748,32 +554,20 @@ a {
 
 .mob-bottombar {
   position: absolute;
-
   left: 14px;
   right: 14px;
   bottom: 12px;
-
   padding: 12px;
-
   border-radius: 22px;
-
-  background:
-    rgba(255, 255, 255, 0.14);
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.18);
 
   backdrop-filter: blur(12px);
-
   -webkit-backdrop-filter: blur(12px);
 
   display: flex;
-
   justify-content: space-between;
-
   gap: 10px;
-
   z-index: 140;
 }
 
@@ -782,17 +576,11 @@ a {
 
 .pill {
   flex: 1;
-
   display: flex;
-
   align-items: center;
-
   justify-content: center;
-
   gap: 10px;
-
   border-radius: 18px;
-
   border: 0;
 
   background:
@@ -803,18 +591,13 @@ a {
     );
 
   color: #fff;
-
   padding: 12px 10px;
-
   font-weight: 800;
-
   cursor: pointer;
 
   box-shadow:
-    inset 0 1px 0
-      rgba(255, 255, 255, 0.25),
-    0 4px 10px
-      rgba(0, 0, 0, 0.18);
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 4px 10px rgba(0, 0, 0, 0.18);
 }
 
 .pill:hover {
@@ -823,43 +606,28 @@ a {
 
 .pill-tx {
   letter-spacing: 0.2px;
-
   font-size: 15px;
 }
 
 .pill-ic {
   display: inline-flex;
-
   align-items: center;
-
   justify-content: center;
-
   line-height: 1;
 }
-
-
-/* ADD CONTACT ICON */
 
 .pill-ic--add svg {
   width: 26px;
   height: 26px;
-
   display: block;
-
   color: #fff;
-
   overflow: visible;
 }
-
-
-/* SHARE ICON */
 
 .pill-ic--share svg {
   width: 26px;
   height: 26px;
-
   display: block;
-
   color: #fff;
 }
 
@@ -908,11 +676,8 @@ a {
 
 .modal {
   position: fixed;
-
   inset: 0;
-
   display: none;
-
   z-index: 5000;
 }
 
@@ -922,76 +687,43 @@ a {
 
 .modal__backdrop {
   position: absolute;
-
   inset: 0;
-
-  background:
-    rgba(0, 0, 0, 0.55);
+  background: rgba(0, 0, 0, 0.55);
 }
 
 .modal__panel {
   position: absolute;
-
   left: 50%;
   top: 50%;
-
-  transform:
-    translate(-50%, -50%);
-
-  width:
-    min(520px, 92vw);
-
+  transform: translate(-50%, -50%);
+  width: min(520px, 92vw);
   border-radius: 22px;
-
   overflow: hidden;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.14);
-
-  background:
-    rgba(20, 20, 20, 0.92);
-
-  box-shadow:
-    0 22px 65px
-    rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(20, 20, 20, 0.92);
+  box-shadow: 0 22px 65px rgba(0, 0, 0, 0.55);
 }
 
 .modal__head {
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
-
   padding: 14px 14px 12px;
-
-  border-bottom:
-    1px solid
-    rgba(255, 255, 255, 0.10);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
 }
 
 .modal__title {
   font-weight: 900;
-
   font-size: 18px;
 }
 
 .modal__x {
   width: 38px;
   height: 34px;
-
   border-radius: 12px;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.14);
-
-  background:
-    rgba(255, 255, 255, 0.08);
-
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.08);
   color: #fff;
-
   cursor: pointer;
 }
 
@@ -1003,15 +735,9 @@ a {
 /* MODAL CARDS */
 
 .card {
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.14);
-
-  background:
-    rgba(255, 255, 255, 0.06);
-
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
   border-radius: 18px;
-
   padding: 14px;
 }
 
@@ -1024,76 +750,51 @@ a {
 
 .share-grid {
   display: grid;
-
-  grid-template-columns:
-    160px 1fr;
-
+  grid-template-columns: 160px 1fr;
   gap: 14px;
 }
 
 .qrbox {
   border-radius: 18px;
-
-  background:
-    rgba(255, 255, 255, 0.10);
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.14);
-
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   display: flex;
-
   align-items: center;
-
   justify-content: center;
-
   padding: 10px;
 }
 
 .qrbox img {
   width: 140px;
   height: 140px;
-
   object-fit: contain;
-
   background: #fff;
-
   border-radius: 12px;
-
   padding: 6px;
 }
 
 .share-actions {
   display: flex;
-
   flex-direction: column;
-
   gap: 10px;
 }
 
 .small {
   font-size: 13px;
-
   opacity: 0.78;
 }
 
 .list {
   display: flex;
-
   flex-direction: column;
-
   gap: 8px;
 }
 
 .list button {
   width: 100%;
-
   text-align: left;
-
   display: flex;
-
   justify-content: space-between;
-
   gap: 10px;
 }
 
@@ -1102,26 +803,16 @@ a {
 
 .emp-item {
   padding: 12px;
-
   border-radius: 16px;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.14);
-
-  background:
-    rgba(255, 255, 255, 0.06);
-
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
   cursor: pointer;
 }
 
 .emp-sub {
   opacity: 0.78;
-
   font-weight: 600;
-
   font-size: 13px;
-
   margin-top: 3px;
 }
 
@@ -1159,20 +850,10 @@ a {
   }
 
   .desk-name {
-    font-size:
-      clamp(
-        32px,
-        3vw,
-        44px
-      );
+    font-size: clamp(32px, 3vw, 44px);
   }
 
   .desk-title {
-    font-size:
-      clamp(
-        16px,
-        1.5vw,
-        20px
-      );
+    font-size: clamp(16px, 1.5vw, 20px);
   }
 }
