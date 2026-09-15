@@ -24,7 +24,16 @@ function escapeHtml(str) {
 }
 function normalize(s) { return String(s ?? "").trim().toLowerCase(); }
 function buildPhoneDisplay(phone, ext) { return phone ? `${String(phone).replace(/\s+/g, " ").trim()}${ext ? ` ext ${ext}` : ""}` : ""; }
-function buildTelHref(phone) { return phone ? `tel:${String(phone).replace(/[^0-9+]/g, "")}` : "#"; }
+function buildTelHref(phone, ext) {
+  const number = String(phone || "").replace(/[^0-9+]/g, "");
+  const extension = String(ext || "").replace(/[^0-9]/g, "");
+
+  if (!number) return "#";
+
+  return extension
+    ? `tel:${number},${extension}`
+    : `tel:${number}`;
+}
 function buildMailHref(email) { return email ? `mailto:${email}` : "#"; }
 function qrImgUrl(text) { return `https://quickchart.io/qr?text=${encodeURIComponent(text)}&size=220`; }
 function safeWebUrl(emp) {
