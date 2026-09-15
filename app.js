@@ -172,10 +172,27 @@ if (els.mobBooth) {
 function makeVCard(emp) {
   const full = `${emp.first || ""} ${emp.last || ""}`.trim();
   const n = `${emp.last || ""};${emp.first || ""};;;`;
-  const tel = (emp.phone || "").trim().replace(/[^0-9+]/g, "");
+
+  const tel = String(emp.phone || "")
+    .trim()
+    .replace(/[^0-9+]/g, "");
+
+  const ext = String(emp.phone_ext || "")
+    .trim()
+    .replace(/[^0-9]/g, "");
+
+  const telWithExt = ext
+    ? `${tel},${ext}`
+    : tel;
+
   const email = (emp.email || "").trim();
   const title = (emp.title || "").trim();
-  const photoAbs = new URL(VCARD_PHOTO_URL, window.location.href).href;
+
+  const photoAbs = new URL(
+    VCARD_PHOTO_URL,
+    window.location.href
+  ).href;
+
   const lines = [
     "BEGIN:VCARD",
     "VERSION:3.0",
@@ -183,12 +200,14 @@ function makeVCard(emp) {
     `FN:${full || "Highlight Industries"}`,
     title ? `TITLE:${title}` : null,
     "ORG:Highlight Industries",
-    tel ? `TEL;TYPE=WORK,VOICE:${tel}` : null,
+    telWithExt ? `TEL;TYPE=WORK,VOICE:${telWithExt}` : null,
+    ext ? `NOTE:Extension ${ext}` : null,
     email ? `EMAIL;TYPE=INTERNET:${email}` : null,
     `URL:${WEBSITE_URL}`,
     `PHOTO;VALUE=URI:${photoAbs}`,
     "END:VCARD",
   ].filter(Boolean);
+
   return lines.join("\r\n");
 }
 
