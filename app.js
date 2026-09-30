@@ -1,0 +1,1453 @@
+const SHOPIFY_URL = "https://www.highlightindustries.net/pages/connect";
+const CSV_URL = "./employees.csv";
+const DEFAULT_PHOTO = "./assets/building.png";
+const VCARD_PHOTO_URL = "./assets/building.png";
+const WEBSITE_URL = "https://www.highlightindustries.com";
+
+const OFFICE_STREET = "2694 Prairie Street SW";
+const OFFICE_CITY = "Grand Rapids";
+const OFFICE_STATE = "MI";
+const OFFICE_ZIP = "49519";
+const OFFICE_COUNTRY = "USA";
+const OFFICE_ADDRESS_DISPLAY =
+  `${OFFICE_STREET}, ${OFFICE_CITY}, ${OFFICE_STATE} ${OFFICE_ZIP}`;
+const OFFICE_MAP_URL =
+  "https://www.google.com/maps/search/?api=1&query=" +
+  encodeURIComponent(
+    `${OFFICE_STREET}, ${OFFICE_CITY}, ${OFFICE_STATE} ${OFFICE_ZIP}`
+  );
+
+const $ = (sel) => document.querySelector(sel);
+
+
+/* =========================================
+   TOAST MESSAGE
+========================================= */
+
+function toast(msg) {
+  const t = document.createElement("div");
+
+  t.textContent = msg;
+
+  Object.assign(t.style, {
+    position: "fixed",
+    left: "50%",
+    bottom: "22px",
+    transform: "translateX(-50%)",
+    background: "rgba(0,0,0,.78)",
+    border: "1px solid rgba(255,255,255,.16)",
+    color: "#fff",
+    padding: "10px 12px",
+    borderRadius: "14px",
+    zIndex: "9999",
+    fontWeight: "700"
+  });
+
+  document.body.appendChild(t);
+
+  setTimeout(() => {
+    t.style.opacity = "0";
+    t.style.transition = "opacity .25s";
+  }, 1400);
+
+  setTimeout(() => {
+    t.remove();
+  }, 1750);
+}
+
+
+/* =========================================
+   HELPERS
+========================================= */
+
+function escapeHtml(str) {
+  return String(str ?? "").replace(
+    /[&<>"']/g,
+    (c) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    }[c])
+  );
+}
+
+function normalize(value) {
+  return String(value ?? "")
+    .trim()
+    .toLowerCase();
+}
+
+
+/* DISPLAY PHONE NUMBER + EXTENSION */
+
+function buildPhoneDisplay(phone, ext) {
+  const number = String(phone || "").trim();
+  const extension = String(ext || "").trim();
+
+  if (!number) return "";
+
+  return extension
+    ? `${number} ext ${extension}`
+    : number;
+}
+
+
+/* DIAL PHONE NUMBER + EXTENSION */
+
+function buildTelHref(phone, ext) {
+  const number =
+    String(phone || "")
+      .replace(/[^0-9+]/g, "");
+
+  const extension =
+    String(ext || "")
+      .replace(/[^0-9]/g, "");
+
+  if (!number) return "#";
+
+  return extension
+    ? `tel:${number},${extension}`
+    : `tel:${number}`;
+}
+
+
+function buildMailHref(email) {
+  return email
+    ? `mailto:${String(email).trim()}`
+    : "#";
+}
+
+
+function qrImgUrl(text) {
+  return (
+    "https://quickchart.io/qr?text=" +
+    encodeURIComponent(text) +
+    "&size=220"
+  );
+}
+
+
+function safeWebUrl(emp) {
+  const raw =
+    emp.website &&
+    String(emp.website).trim()
+      ? String(emp.website).trim()
+      : WEBSITE_URL;
+
+  return raw.startsWith("http")
+    ? raw
+    : `https://${raw}`;
+}
+
+
+function profileUrlFor(emp) {
+  const id = encodeURIComponent(
+    String(emp?.id || "")
+      .trim()
+      .toLowerCase()
+  );
+
+  return `${SHOPIFY_URL}?id=${id}#${id}`;
+}
+
+
+/* =========================================
+   CSV
+========================================= */
+
+function parseCsv(text) {
+  const rows = [];
+
+  let row = [];
+  let cur = "";
+  let inQuotes = false;
+
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    const next = text[i + 1];
+
+    if (ch === '"') {
+      if (inQuotes && next === '"') {
+        cur += '"';
+        i++;
+      } else {
+        inQuotes = !inQuotes;
+      }
+
+      continue;
+    }
+
+    if (!inQuotes && ch === ",") {
+      row.push(cur);
+      cur = "";
+      continue;
+    }
+
+    if (
+      !inQuotes &&
+      (ch === "\n" || ch === "\r")
+    ) {
+      if (
+        ch === "\r" &&
+        next === "\n"
+      ) {
+        i++;
+      }
+
+      row.push(cur);
+      cur = "";
+
+      if (
+        row.some(
+          (cell) => cell.length > 0
+        )
+      ) {
+        rows.push(row);
+      }
+
+      row = [];
+      continue;
+    }
+
+    cur += ch;
+  }
+
+  row.push(cur);
+
+  if (
+    row.some(
+      (cell) => cell.length > 0
+    )
+  ) {
+    rows.push(row);
+  }
+
+  if (!rows.length) {
+    return [];
+  }
+
+  const header =
+    rows[0].map(
+      (h) => normalize(h)
+    );
+
+  return rows
+    .slice(1)
+    .map((cols) => {
+      const obj = {};
+
+      header.forEach(
+        (h, idx) => {
+          obj[h] =
+            (cols[idx] ?? "").trim();
+        }
+      );
+
+      return obj;
+    })
+    .filter((row) =>
+      Object.values(row).some(
+        (value) =>
+          String(value).trim().length
+      )
+    );
+}
+
+
+/* =========================================
+   EMPLOYEE DATA
+========================================= */
+
+let EMPLOYEES = [];
+let current = null;
+
+
+/* =========================================
+   PAGE ELEMENTS
+========================================= */
+
+const els = {
+  employeeSearch: $("#employeeSearch"),
+
+  deskSaveHit: $("#deskSaveHit"),
+  deskShareHit: $("#deskShareHit"),
+
+  openBtn: $("#openBtn"),
+  clearBtn: $("#clearBtn"),
+
+  deskPhoto: $("#deskPhoto"),
+  deskName: $("#deskName"),
+  deskTitle: $("#deskTitle"),
+  deskBooth: $("#deskBooth"),
+  deskPhone: $("#deskPhone"),
+  deskEmail: $("#deskEmail"),
+  deskWeb: $("#deskWeb"),
+  deskAddress: $("#deskAddress"),
+
+  mobQr: $("#mobQr"),
+  mobPhoto: $("#mobPhoto"),
+  mobName: $("#mobName"),
+  mobTitle: $("#mobTitle"),
+  mobBooth: $("#mobBooth"),
+  mobPhone: $("#mobPhone"),
+  mobEmail2: $("#mobEmail2"),
+  mobOffice: $("#mobOffice"),
+
+  mobShareBtn: $("#mobShareBtn"),
+  mobDirectoryBtn: $("#mobDirectoryBtn"),
+  mobAddBtn: $("#mobAddBtn"),
+
+  modal: $("#modal"),
+  modalBody: $("#modalBody"),
+  modalTitle: $("#modalTitle")
+};
+
+
+/* =========================================
+   FIND EMPLOYEE
+========================================= */
+
+function findEmployee(query) {
+  const q = normalize(query);
+
+  if (!q) return null;
+
+  return (
+    EMPLOYEES.find((e) =>
+      normalize(e.id) === q ||
+      normalize(e.first) === q ||
+      normalize(e.last) === q ||
+      normalize(
+        `${e.first} ${e.last}`
+      ) === q ||
+      normalize(
+        `${e.last}, ${e.first}`
+      ) === q
+    ) ||
+
+    EMPLOYEES.find((e) =>
+      normalize(
+        `${e.first} ${e.last}`
+      ).includes(q)
+    )
+  );
+}
+
+
+/* =========================================
+   EMPLOYEE PHOTO
+========================================= */
+
+function photoSrc(emp) {
+  if (!emp || !emp.id) {
+    return DEFAULT_PHOTO;
+  }
+
+  return (
+    "./assets/" +
+    String(emp.id)
+      .trim()
+      .toLowerCase() +
+    ".jpg"
+  );
+}
+
+
+/* =========================================
+   RENDER EMPLOYEE
+========================================= */
+
+function renderEmployee(emp) {
+  if (!emp) return;
+
+  current = emp;
+
+  const full =
+    `${emp.first || ""} ${emp.last || ""}`
+      .trim() ||
+    "Employee";
+
+  const title =
+    emp.title || "";
+
+  const booth =
+    (emp.booth || "").trim();
+
+  const phoneDisp =
+    buildPhoneDisplay(
+      emp.phone,
+      emp.phone_ext
+    );
+
+  const telHref =
+    buildTelHref(
+      emp.phone,
+      emp.phone_ext
+    );
+
+  const email =
+    emp.email || "";
+
+  const webUrl =
+    safeWebUrl(emp);
+
+  const cardUrl =
+    profileUrlFor(emp);
+
+
+  /* -----------------------------------------
+     SEND EMPLOYEE LINKS TO SHOPIFY
+
+     Shopify owns the mobile Call / Email /
+     Website overlay buttons.
+
+     The iframe sends the actual employee links
+     to the parent Shopify page.
+  ----------------------------------------- */
+
+  if (window.parent !== window) {
+    window.parent.postMessage(
+      {
+        type: "HI_CONNECT_EMPLOYEE",
+        id: emp.id || "",
+        phone: telHref,
+        email: buildMailHref(email),
+        website: webUrl,
+        office: OFFICE_MAP_URL,
+        officeAddress: OFFICE_ADDRESS_DISPLAY
+      },
+      "*"
+    );
+  }
+
+
+  /* DESKTOP PHOTO */
+
+  if (els.deskPhoto) {
+    els.deskPhoto.src =
+      photoSrc(emp);
+
+    els.deskPhoto.onerror =
+      () => {
+        els.deskPhoto.src =
+          DEFAULT_PHOTO;
+      };
+  }
+
+
+  /* MOBILE PHOTO */
+
+  if (els.mobPhoto) {
+    els.mobPhoto.src =
+      photoSrc(emp);
+
+    els.mobPhoto.onerror =
+      () => {
+        els.mobPhoto.src =
+          DEFAULT_PHOTO;
+      };
+  }
+
+
+  /* NAMES + TITLES */
+
+  if (els.deskName) {
+    els.deskName.textContent =
+      full;
+  }
+
+  if (els.deskTitle) {
+    els.deskTitle.textContent =
+      title;
+  }
+
+  if (els.mobName) {
+    els.mobName.textContent =
+      full;
+  }
+
+  if (els.mobTitle) {
+    els.mobTitle.textContent =
+      title;
+  }
+
+
+  /* DESKTOP BOOTH */
+
+  if (els.deskBooth) {
+    if (booth) {
+      els.deskBooth.textContent =
+        `Booth: ${booth}`;
+
+      els.deskBooth.hidden =
+        false;
+    } else {
+      els.deskBooth.textContent =
+        "";
+
+      els.deskBooth.hidden =
+        true;
+    }
+  }
+
+
+  /* MOBILE BOOTH */
+
+  if (els.mobBooth) {
+    if (booth) {
+      els.mobBooth.textContent =
+        `Booth: ${booth}`;
+
+      els.mobBooth.hidden =
+        false;
+    } else {
+      els.mobBooth.textContent =
+        "";
+
+      els.mobBooth.hidden =
+        true;
+    }
+  }
+
+
+  /* DESKTOP PHONE */
+
+  if (els.deskPhone) {
+    els.deskPhone.textContent =
+      phoneDisp || "—";
+
+    els.deskPhone.href =
+      telHref;
+  }
+
+
+  /* DESKTOP EMAIL */
+
+  if (els.deskEmail) {
+    els.deskEmail.textContent =
+      email || "—";
+
+    els.deskEmail.href =
+      buildMailHref(email);
+  }
+
+
+  /* DESKTOP WEBSITE */
+
+  if (els.deskWeb) {
+    els.deskWeb.href =
+      webUrl;
+  }
+
+
+  /* DESKTOP ADDRESS */
+
+  if (els.deskAddress) {
+    els.deskAddress.href =
+      OFFICE_MAP_URL;
+
+    els.deskAddress.innerHTML =
+      `${escapeHtml(OFFICE_STREET)}<br>${escapeHtml(
+        `${OFFICE_CITY}, ${OFFICE_STATE} ${OFFICE_ZIP}`
+      )}`;
+  }
+
+
+  /* MOBILE PHONE */
+
+  if (els.mobPhone) {
+    els.mobPhone.textContent =
+      phoneDisp || "—";
+
+    els.mobPhone.href =
+      telHref;
+  }
+
+
+  /* MOBILE EMAIL */
+
+  if (els.mobEmail2) {
+    els.mobEmail2.textContent =
+      email || "—";
+
+    els.mobEmail2.href =
+      buildMailHref(email);
+  }
+
+
+  /* MOBILE OFFICE */
+
+  if (els.mobOffice) {
+    els.mobOffice.href =
+      OFFICE_MAP_URL;
+
+    els.mobOffice.innerHTML =
+      `<span>${escapeHtml(OFFICE_STREET)}</span>` +
+      `<span>${escapeHtml(
+        `${OFFICE_CITY}, ${OFFICE_STATE} ${OFFICE_ZIP}`
+      )} ↗</span>`;
+  }
+
+
+  /* QR CODE */
+
+  if (els.mobQr) {
+    els.mobQr.src =
+      qrImgUrl(cardUrl);
+  }
+}
+
+
+/* =========================================
+   VCARD
+========================================= */
+
+function makeVCard(emp) {
+  const full =
+    `${emp.first || ""} ${emp.last || ""}`
+      .trim();
+
+  const n =
+    `${emp.last || ""};${emp.first || ""};;;`;
+
+  const tel =
+    String(emp.phone || "")
+      .trim()
+      .replace(/[^0-9+]/g, "");
+
+  const ext =
+    String(emp.phone_ext || "")
+      .trim()
+      .replace(/[^0-9]/g, "");
+
+  const telWithExt =
+    ext
+      ? `${tel},${ext}`
+      : tel;
+
+  const email =
+    (emp.email || "").trim();
+
+  const title =
+    (emp.title || "").trim();
+
+  const photoAbs =
+    new URL(
+      VCARD_PHOTO_URL,
+      window.location.href
+    ).href;
+
+  const lines = [
+    "BEGIN:VCARD",
+    "VERSION:3.0",
+
+    `N:${n}`,
+
+    `FN:${
+      full ||
+      "Highlight Industries"
+    }`,
+
+    title
+      ? `TITLE:${title}`
+      : null,
+
+    "ORG:Highlight Industries",
+
+    `ADR;TYPE=WORK:;;${OFFICE_STREET};${OFFICE_CITY};${OFFICE_STATE};${OFFICE_ZIP};${OFFICE_COUNTRY}`,
+
+    telWithExt
+      ? `TEL;TYPE=WORK,VOICE:${telWithExt}`
+      : null,
+
+    ext
+      ? `NOTE:Extension ${ext}`
+      : null,
+
+    email
+      ? `EMAIL;TYPE=INTERNET:${email}`
+      : null,
+
+    `URL:${WEBSITE_URL}`,
+
+    `PHOTO;VALUE=URI:${photoAbs}`,
+
+    "END:VCARD"
+  ].filter(Boolean);
+
+  return lines.join("\r\n");
+}
+
+
+/* =========================================
+   DOWNLOAD VCARD
+========================================= */
+
+function downloadVCard(emp) {
+  const blob =
+    new Blob(
+      [makeVCard(emp)],
+      {
+        type:
+          "text/vcard;charset=utf-8"
+      }
+    );
+
+  const url =
+    URL.createObjectURL(blob);
+
+  const a =
+    document.createElement("a");
+
+  const safeName =
+    `${
+      (emp.first || "").trim()
+    }_${
+      (emp.last || "").trim()
+    }`
+      .replace(/\s+/g, "_") ||
+    "contact";
+
+  a.href = url;
+
+  a.download =
+    `${safeName}.vcf`;
+
+  document.body.appendChild(a);
+
+  a.click();
+
+  a.remove();
+
+  setTimeout(
+    () => {
+      URL.revokeObjectURL(url);
+    },
+    1200
+  );
+}
+
+
+/* =========================================
+   NATIVE SHARE
+========================================= */
+
+async function nativeShare(emp) {
+  const full =
+    `${emp.first || ""} ${emp.last || ""}`
+      .trim() ||
+    "Highlight Industries";
+
+  const phoneDisp =
+    buildPhoneDisplay(
+      emp.phone,
+      emp.phone_ext
+    );
+
+  const shareUrl =
+    profileUrlFor(emp);
+
+  const text = [
+    full,
+
+    emp.title || "",
+
+    phoneDisp
+      ? `Phone: ${phoneDisp}`
+      : "",
+
+    emp.email
+      ? `Email: ${emp.email}`
+      : "",
+
+    `Office: ${OFFICE_ADDRESS_DISPLAY}`,
+
+    `Connect: ${shareUrl}`
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  if (!navigator.share) {
+    return false;
+  }
+
+  try {
+    await navigator.share({
+      title:
+        `HI | Connect — ${full}`,
+      text,
+      url: shareUrl
+    });
+
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+
+/* =========================================
+   MODAL
+========================================= */
+
+function openModal(
+  title,
+  innerHtml
+) {
+  if (
+    !els.modal ||
+    !els.modalBody ||
+    !els.modalTitle
+  ) {
+    return;
+  }
+
+  els.modalTitle.textContent =
+    title;
+
+  els.modalBody.innerHTML =
+    innerHtml;
+
+  els.modal.classList.add(
+    "is-open"
+  );
+
+  els.modal.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+}
+
+
+function closeModal() {
+  if (!els.modal) return;
+
+  els.modal.classList.remove(
+    "is-open"
+  );
+
+  els.modal.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+}
+
+
+/* =========================================
+   SHARE MODAL
+========================================= */
+
+function openShareModal(emp) {
+  const full =
+    `${emp.first || ""} ${emp.last || ""}`
+      .trim() ||
+    "Highlight Industries";
+
+  const link =
+    profileUrlFor(emp);
+
+  openModal(
+    "Share",
+    `
+      <div class="card">
+        <div class="share-grid">
+
+          <div class="qrbox">
+            <img
+              alt="QR code to HI Connect"
+              src="${qrImgUrl(link)}">
+          </div>
+
+          <div class="share-actions">
+
+            <div
+              style="font-weight:900;font-size:18px;">
+              ${escapeHtml(full)}
+            </div>
+
+            <div class="list">
+
+              <button
+                class="btn btn--solid"
+                type="button"
+                data-action="nativeShare">
+                Share (AirDrop / Text / Email)
+              </button>
+
+              <button
+                class="btn"
+                type="button"
+                data-action="copyLink">
+                Copy Link
+              </button>
+
+              <button
+                class="btn"
+                type="button"
+                data-action="downloadVcard">
+                Download Contact (.vcf)
+              </button>
+
+            </div>
+
+            <div class="small">
+              If Share is not available,
+              Copy Link works everywhere.
+            </div>
+
+          </div>
+        </div>
+      </div>
+    `
+  );
+
+
+  els.modalBody
+    ?.querySelector(
+      '[data-action="nativeShare"]'
+    )
+    ?.addEventListener(
+      "click",
+      async () => {
+        const ok =
+          await nativeShare(emp);
+
+        if (ok) {
+          closeModal();
+        } else {
+          toast(
+            "Share not available here — try Copy Link."
+          );
+        }
+      }
+    );
+
+
+  els.modalBody
+    ?.querySelector(
+      '[data-action="copyLink"]'
+    )
+    ?.addEventListener(
+      "click",
+      async () => {
+
+        try {
+          await navigator.clipboard
+            .writeText(link);
+
+          toast("Copied!");
+        } catch {
+
+          const inp =
+            document.createElement(
+              "input"
+            );
+
+          inp.value = link;
+
+          document.body
+            .appendChild(inp);
+
+          inp.select();
+
+          document.execCommand(
+            "copy"
+          );
+
+          inp.remove();
+
+          toast("Copied!");
+        }
+      }
+    );
+
+
+  els.modalBody
+    ?.querySelector(
+      '[data-action="downloadVcard"]'
+    )
+    ?.addEventListener(
+      "click",
+      () => {
+        downloadVCard(emp);
+      }
+    );
+}
+
+
+/* =========================================
+   EMPLOYEE DIRECTORY
+========================================= */
+
+function openDirectoryModal() {
+  const items =
+    EMPLOYEES
+      .map(
+        (e) => `
+          <div
+            class="emp-item"
+            data-emp="${escapeHtml(e.id)}">
+
+            <div
+              style="font-weight:900;font-size:16px;">
+              ${escapeHtml(
+                `${e.first || ""} ${e.last || ""}`.trim()
+              )}
+            </div>
+
+            <div class="emp-sub">
+              ${escapeHtml(e.title || "")}
+            </div>
+
+          </div>
+        `
+      )
+      .join("");
+
+  openModal(
+    "Find Employee",
+    `
+      <div class="card">
+
+        <div
+          style="
+            display:flex;
+            gap:10px;
+            align-items:center;
+          ">
+
+          <input
+            id="dirSearch"
+            type="search"
+            placeholder="Search…"
+            style="
+              flex:1;
+              padding:10px 12px;
+              border-radius:14px;
+              border:1px solid rgba(255,255,255,.14);
+              background:rgba(255,255,255,.08);
+              color:#fff;
+              outline:0;
+            ">
+
+          <button
+            class="btn btn--solid"
+            type="button"
+            id="dirGo">
+            Go
+          </button>
+
+        </div>
+
+        <div style="height:10px"></div>
+
+        <div
+          id="dirList"
+          style="
+            display:grid;
+            gap:10px;
+            max-height:46vh;
+            overflow:auto;
+          ">
+          ${items}
+        </div>
+
+      </div>
+    `
+  );
+
+  const dirSearch =
+    $("#dirSearch");
+
+  const dirGo =
+    $("#dirGo");
+
+  const dirList =
+    $("#dirList");
+
+
+  function filter() {
+    const q =
+      normalize(
+        dirSearch.value
+      );
+
+    Array
+      .from(dirList.children)
+      .forEach((el) => {
+
+        const id =
+          el.getAttribute(
+            "data-emp"
+          ) || "";
+
+        const emp =
+          EMPLOYEES.find(
+            (e) =>
+              normalize(e.id) ===
+              normalize(id)
+          );
+
+        const full =
+          normalize(
+            `${emp?.first || ""} ${emp?.last || ""}`
+          );
+
+        const title =
+          normalize(
+            emp?.title || ""
+          );
+
+        el.style.display =
+          (
+            !q ||
+            full.includes(q) ||
+            title.includes(q) ||
+            normalize(id).includes(q)
+          )
+            ? ""
+            : "none";
+      });
+  }
+
+
+  dirSearch.addEventListener(
+    "input",
+    filter
+  );
+
+
+  dirGo.addEventListener(
+    "click",
+    () => {
+      const hit =
+        findEmployee(
+          dirSearch.value
+        );
+
+      if (hit) {
+        renderEmployee(hit);
+        closeModal();
+      } else {
+        toast(
+          "No match found."
+        );
+      }
+    }
+  );
+
+
+  dirSearch.addEventListener(
+    "keydown",
+    (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        dirGo.click();
+      }
+    }
+  );
+
+
+  dirList
+    .querySelectorAll(
+      ".emp-item"
+    )
+    .forEach((el) => {
+
+      el.addEventListener(
+        "click",
+        () => {
+
+          const hit =
+            EMPLOYEES.find(
+              (e) =>
+                normalize(e.id) ===
+                normalize(
+                  el.getAttribute(
+                    "data-emp"
+                  )
+                )
+            );
+
+          if (hit) {
+            renderEmployee(hit);
+            closeModal();
+          }
+        }
+      );
+    });
+}
+
+
+/* =========================================
+   BUTTON EVENTS
+========================================= */
+
+function wireUI() {
+
+  els.deskSaveHit
+    ?.addEventListener(
+      "click",
+      () => {
+        if (current) {
+          downloadVCard(current);
+        }
+      }
+    );
+
+
+  els.deskShareHit
+    ?.addEventListener(
+      "click",
+      () => {
+        if (current) {
+          openShareModal(current);
+        }
+      }
+    );
+
+
+  els.openBtn
+    ?.addEventListener(
+      "click",
+      () => {
+
+        const hit =
+          findEmployee(
+            els.employeeSearch?.value
+          );
+
+        if (hit) {
+          renderEmployee(hit);
+        } else {
+          toast(
+            "No match found."
+          );
+        }
+      }
+    );
+
+
+  els.employeeSearch
+    ?.addEventListener(
+      "keydown",
+      (e) => {
+
+        if (
+          e.key === "Enter"
+        ) {
+          e.preventDefault();
+
+          els.openBtn
+            ?.click();
+        }
+      }
+    );
+
+
+  els.clearBtn
+    ?.addEventListener(
+      "click",
+      () => {
+
+        if (
+          els.employeeSearch
+        ) {
+          els.employeeSearch.value =
+            "";
+        }
+
+        toast("Cleared.");
+      }
+    );
+
+
+  els.mobAddBtn
+    ?.addEventListener(
+      "click",
+      () => {
+
+        if (current) {
+          downloadVCard(current);
+        }
+      }
+    );
+
+
+  els.mobShareBtn
+    ?.addEventListener(
+      "click",
+      async () => {
+
+        if (!current) return;
+
+        const ok =
+          await nativeShare(
+            current
+          );
+
+        if (!ok) {
+          openShareModal(
+            current
+          );
+        }
+      }
+    );
+
+
+  els.mobDirectoryBtn
+    ?.addEventListener(
+      "click",
+      openDirectoryModal
+    );
+
+
+  document.addEventListener(
+    "click",
+    (e) => {
+
+      const target =
+        e.target;
+
+      if (
+        target instanceof HTMLElement &&
+        target.dataset.close === "1"
+      ) {
+        closeModal();
+      }
+    }
+  );
+
+
+  document.addEventListener(
+    "keydown",
+    (e) => {
+
+      if (
+        e.key === "Escape"
+      ) {
+        closeModal();
+      }
+    }
+  );
+}
+
+
+/* =========================================
+   INITIALIZE
+========================================= */
+
+async function init() {
+  try {
+
+    const response =
+      await fetch(
+        `${CSV_URL}?v=${Date.now()}`,
+        {
+          cache: "no-store"
+        }
+      );
+
+    if (!response.ok) {
+      throw new Error(
+        `CSV load failed: ${response.status}`
+      );
+    }
+
+    EMPLOYEES =
+      parseCsv(
+        await response.text()
+      );
+
+    if (!EMPLOYEES.length) {
+      throw new Error(
+        "No employees found in CSV."
+      );
+    }
+
+    wireUI();
+
+
+    /* GET EMPLOYEE ID FROM URL */
+
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
+
+    const hash =
+      (
+        window.location.hash || ""
+      )
+        .replace(/^#/, "")
+        .trim();
+
+    const requestedId =
+      normalize(
+        params.get("id") ||
+        hash
+      );
+
+    const match =
+      requestedId
+        ? EMPLOYEES.find(
+            (e) =>
+              normalize(e.id) ===
+              requestedId
+          )
+        : null;
+
+
+    /* DEFAULT TO JESSICA */
+
+    const defaultEmployee =
+      EMPLOYEES.find(
+        (e) =>
+          normalize(e.id) ===
+          "jessica"
+      );
+
+
+    renderEmployee(
+      match ||
+      defaultEmployee ||
+      EMPLOYEES[0]
+    );
+
+
+    /* SERVICE WORKER */
+
+    if (
+      "serviceWorker" in navigator
+    ) {
+      navigator.serviceWorker
+        .register("./sw.js")
+        .catch(() => {});
+    }
+
+  } catch (err) {
+
+    console.error(err);
+
+    toast(
+      "Couldn't load employees.csv"
+    );
+
+    if (els.deskName) {
+      els.deskName.textContent =
+        "Error loading employees.csv";
+    }
+
+    if (els.mobName) {
+      els.mobName.textContent =
+        "Error loading employees.csv";
+    }
+  }
+}
+
+
+/* START */
+
+init();
